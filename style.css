@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Fira Code', monospace;
+    background:#07111f;
+    color:#e5f0ff;
+    overflow-x:hidden;
+    min-height:100vh;
+    position:relative;
+}
+
+/* MATH + CODE BACKGROUND */
+
+body::before{
+    content:
+    "∫ x²dx   π   λ   f(x)=x²   Σ   lim x→∞   E=mc²   dy/dx   ∇   sinθ";
+
+    position:fixed;
+
+    top:10%;
+    left:5%;
+
+    width:90%;
+    height:90%;
+
+    color:rgba(255,255,255,0.03);
+
+    font-size:3rem;
+    line-height:5rem;
+
+    z-index:-1;
+
+    pointer-events:none;
+}
+
+/* HEADER */
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:1.5rem 5%;
+
+    background:rgba(0,0,0,0.35);
+
+    backdrop-filter:blur(10px);
+
+    border-bottom:1px solid rgba(255,255,255,0.08);
+
+    position:sticky;
+    top:0;
+
+    z-index:100;
+}
+
+.logo{
+    font-size:1.4rem;
+    font-weight:600;
+
+    color:#7dd3fc;
+}
+
+nav a{
+    color:#e5f0ff;
+
+    text-decoration:none;
+
+    margin-left:2rem;
+
+    transition:0.3s ease;
+}
+
+nav a:hover{
+    color:#7dd3fc;
+}
+
+/* HERO */
+
+.hero{
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    padding:2rem;
+}
+
+/* TERMINAL BOX */
+
+.terminal-box{
+    background:rgba(0,0,0,0.45);
+
+    border:1px solid rgba(125,211,252,0.2);
+
+    border-radius:16px;
+
+    width:90%;
+    max-width:850px;
+
+    padding:2rem;
+
+    box-shadow:0 0 30px rgba(125,211,252,0.08);
+}
+
+/* TERMINAL DOTS */
+
+.terminal-top{
+    display:flex;
+    gap:0.5rem;
+
+    margin-bottom:1.5rem;
+}
+
+.circle{
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+}
+
+.red{
+    background:#ff5f56;
+}
+
+.yellow{
+    background:#ffbd2e;
+}
+
+.green{
+    background:#27c93f;
+}
+
+/* MAIN TITLE */
+
+.typing{
+    color:#7dd3fc;
+
+    font-size:2.8rem;
+
+    min-height:70px;
+}
+
+/* SUBTITLE */
+
+.subtitle{
+    margin-top:1.5rem;
+
+    line-height:1.8;
+
+    color:#94a3b8;
+}
+
+/* BUTTON */
+
+.btn{
+    display:inline-block;
+
+    margin-top:2rem;
+
+    padding:0.9rem 1.8rem;
+
+    border-radius:10px;
+
+    background:#0f172a;
+
+    color:#7dd3fc;
+
+    border:1px solid #7dd3fc;
+
+    text-decoration:none;
+
+    transition:0.3s ease;
+}
+
+.btn:hover{
+    background:#7dd3fc;
+    color:#07111f;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+
+    padding:2rem;
+
+    border-top:1px solid rgba(255,255,255,0.08);
+
+    color:#94a3b8;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .typing{
+        font-size:1.8rem;
+    }
+
+    nav a{
+        margin-left:1rem;
+        font-size:0.9rem;
+    }
+
+    .terminal-box{
+        padding:1.5rem;
+    }
+
+}
