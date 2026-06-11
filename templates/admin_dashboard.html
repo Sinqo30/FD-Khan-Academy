@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Dashboard</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <h2>FD KHAN</h2>
+
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+
+    </aside>
+
+    <main class="main">
+
+        <h1>Dashboard</h1>
+
+        <div class="card">
+            <h2>Total Bookings</h2>
+            <p>{{ bookings|length }}</p>
+        </div>
+
+        <h2>Bookings</h2>
+
+        <table>
+
+            <tr>
+                <th>Name</th>
+                <th>Subject</th>
+                <th>Email</th>
+            </tr>
+
+            {% for b in bookings %}
+
+            <tr>
+                <td>{{ b.name }}</td>
+                <td>{{ b.subject }}</td>
+                <td>{{ b.email }}</td>
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </main>
+
+</div>
+
+</body>
+</html>
