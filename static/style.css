@@ -409,7 +409,15 @@ section {
     max-width: 400px;
     border-radius: 8px;
     background-color: #1a202c;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.Comment_box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0  12px 32px rgba(0,0,0,0.3);
+}
+
 .Comment_section_image{
     margin-right: 24px;
 }
