@@ -1,0 +1,104 @@
+<!-- about.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About | FD Khan Academy</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        FD KHAN ACADEMY
+    </div>
+
+    <nav>
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('services') }}">Services</a>
+
+        <a href="{{ url_for('about') }}">About</a>
+
+       <a href="{{ url_for('booking') }}">Booking</a>
+
+        <a href="{{ url_for('store') }}">Online Store</a>
+
+    </nav>
+
+</header>
+
+<section class="section">
+
+    <div class="container">
+
+        <h1 class="section-title">
+            About FD Khan Academy
+        </h1>
+
+        <div class="terminal-box">
+
+            <p class="subtitle">
+
+                FD Khan Academy is dedicated to helping students
+                excel in Mathematics and Information Technology through
+                modern tutoring, mentorship, and academic guidance.
+
+                <br><br>
+
+                We believe education should feel engaging,
+                empowering, and accessible to every student.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section>
+
+    <div class="Comment_Container">
+
+        <h2 class="Comment_title">Comments from our students</h2>
+
+<div class="comment-cards-row">    
+    <div class="Comment_box">
+        <div class="Comment_section_image">
+            <img src="{{ url_for('static', filename='dummy_icons/Cat_profile_2.jpg') }}" class="comment_image"> <div class="Comment_text">
+            <p class="Username">@Test subject </p>
+            <p class="comment_body">Awesome tutor</p>
+        </div>
+    </div>
+
+    <div class="Comment_box">
+        <div class="Comment_section_image">
+            <img src="{{ url_for('static', filename='dummy_icons/Cat_profile.jpg') }}" class="comment_image">  <div class="Comment_text">
+            <p class="Username">@Test subject 2 </p>
+            <p class="comment_body">I have great hair</p>
+        </div>
+</div>
+
+    </div> 
+</div>
+</section>
+
+<footer>
+    © 2026 FD Khan Academy
+</footer>
+
+</body>
+
+</html
