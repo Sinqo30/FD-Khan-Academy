@@ -19,6 +19,9 @@ body{
     min-height:100vh;
 
     position:relative;
+
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -133,6 +136,8 @@ nav a:hover{
     padding:60px 10%;
 
     text-align:center;
+
+    flex: 1;
 }
 
 
@@ -376,17 +381,26 @@ select{
 
 .Comment_Container{
 
-    padding:60px 10%;
-
-    text-align:center;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.03); 
+    padding: 60px 40px;
+    border-radius: 24px;
+    margin-top: 60px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    
 }
 
 
 .Comment_title{
 
-    color:#7dd3fc;
-
-    margin-bottom:30px;
+    color: #7dd3fc;
+    margin-top: 0;
+    margin-bottom: 40px;
+    margin-left: 20px;
+    text-align: left;
 }
 
 
@@ -419,8 +433,14 @@ select{
     align-items:center;
 
     gap:20px;
-}
 
+    transition: transformation 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.Comment_box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    border-color: rgba(0, 255, 200, 0.3); 
+}
 
 .comment_image{
 
