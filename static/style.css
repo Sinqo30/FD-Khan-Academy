@@ -572,3 +572,80 @@ footer{
     }
 
 }
+.booking-select{
+
+    width:100%;
+
+    padding:16px;
+
+    border-radius:12px;
+
+    border:2px solid #7dd3fc;
+
+    background:rgba(255,255,255,0.08);
+
+    color:#7dd3fc;
+
+    font-family:inherit;
+
+    font-size:1rem;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+}
+
+.booking-select:hover{
+
+    border-color:#00ffd5;
+}
+
+.booking-select:focus{
+
+    outline:none;
+
+    border-color:#00ffd5;
+
+    box-shadow:0 0 12px rgba(0,255,213,0.3);
+}
+
+.booking-select option{
+
+    background:#07111f;
+
+    color:white;
+}
+/* Date and Time Inputs */
+
+input[type="date"],
+input[type="time"] {
+
+    padding: 16px;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    background: rgba(255,255,255,0.05);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 1rem;
+
+    cursor: pointer;
+}
+
+
+/* Chrome / Edge calendar + clock icons */
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+
+    filter: invert(1);
+
+    cursor: pointer;
+}

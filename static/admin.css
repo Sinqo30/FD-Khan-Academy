@@ -14,6 +14,7 @@ body {
     width: 220px;
     background: rgba(255,255,255,0.03);
     padding: 20px;
+    border-right: 1px solid rgba(255,255,255,0.08);
 }
 
 .sidebar h2 {
@@ -25,6 +26,7 @@ body {
     color: white;
     text-decoration: none;
     margin: 12px 0;
+    transition: 0.3s;
 }
 
 .sidebar a:hover {
@@ -53,6 +55,7 @@ table {
 
 th {
     background: rgba(0,212,255,0.15);
+    color: #00d4ff;
 }
 
 th,
@@ -60,6 +63,11 @@ td {
     padding: 12px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     text-align: left;
+    vertical-align: top;
+}
+
+tr:hover {
+    background: rgba(255,255,255,0.03);
 }
 
 .login-box {
@@ -83,7 +91,23 @@ td {
     font-weight: bold;
 }
 
+.confirm-btn {
+    display: inline-block;
+    background: #00aa44;
+    color: white;
+    padding: 8px 14px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.confirm-btn:hover {
+    opacity: 0.85;
+}
+
 .delete-btn {
+    display: inline-block;
     background: #ff4444;
     color: white;
     padding: 8px 14px;
@@ -94,4 +118,14 @@ td {
 
 .delete-btn:hover {
     opacity: 0.85;
+}
+
+.status-pending {
+    color: orange;
+    font-weight: bold;
+}
+
+.status-confirmed {
+    color: #00ff88;
+    font-weight: bold;
 }

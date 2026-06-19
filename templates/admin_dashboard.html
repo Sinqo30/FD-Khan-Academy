@@ -35,6 +35,34 @@
 
         </div>
 
+        <div class="card">
+
+            <h2>Block Date & Time</h2>
+
+            <form action="/block_slot" method="POST">
+
+                <input
+                type="date"
+                name="date"
+                required>
+
+                <input
+                type="time"
+                name="time"
+                required>
+
+                <button
+                type="submit"
+                class="confirm-btn">
+
+                    Block Slot
+
+                </button>
+
+            </form>
+
+        </div>
+
         <h2>Bookings</h2>
 
         {% if bookings %}
@@ -43,10 +71,14 @@
 
             <tr>
                 <th>Name</th>
-                <th>Subject</th>
                 <th>Email</th>
+                <th>Grade</th>
+                <th>Subject</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
                 <th>Message</th>
-                <th>Action</th>
+                <th>Actions</th>
             </tr>
 
             {% for b in bookings %}
@@ -55,18 +87,54 @@
 
                 <td>{{ b.name }}</td>
 
+                <td>{{ b.email }}</td>
+
+                <td>{{ b.grade }}</td>
+
                 <td>{{ b.subject }}</td>
 
-                <td>{{ b.email }}</td>
+                <td>{{ b.date }}</td>
+
+                <td>{{ b.time }}</td>
+
+                <td>
+
+                    {% if b.status == "Confirmed" %}
+
+                        <span class="status-confirmed">
+                            Confirmed
+                        </span>
+
+                    {% else %}
+
+                        <span class="status-pending">
+                            Pending
+                        </span>
+
+                    {% endif %}
+
+                </td>
 
                 <td>{{ b.message }}</td>
 
                 <td>
 
+                    {% if b.status != "Confirmed" %}
+
+                    <a
+                    href="/confirm_booking/{{ loop.index0 }}"
+                    class="confirm-btn">
+
+                        Confirm
+
+                    </a>
+
+                    {% endif %}
+
                     <a
                     href="/delete_booking/{{ loop.index0 }}"
                     class="delete-btn"
-                    onclick="return confirm('Delete this booking?');">
+                    onclick="return confirm('Delete booking?');">
 
                         Delete
 
@@ -82,7 +150,36 @@
 
         {% else %}
 
-        <p>No bookings yet.</p>
+        <p>No bookings available.</p>
+
+        {% endif %}
+
+        <br><br>
+
+        <h2>Blocked Slots</h2>
+
+        {% if blocked_slots %}
+
+        <table>
+
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+
+            {% for slot in blocked_slots %}
+
+            <tr>
+
+                <td>{{ slot.date }}</td>
+
+                <td>{{ slot.time }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
 
         {% endif %}
 
