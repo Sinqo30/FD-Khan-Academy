@@ -3,189 +3,705 @@
 
 <head>
 
-    <title>Admin Dashboard</title>
+<title>Admin Dashboard</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+
 
 </head>
 
+
+
 <body>
+
+
 
 <div class="layout">
 
-    <aside class="sidebar">
 
-        <h2>FD KHAN</h2>
 
-        <a href="/dashboard">Dashboard</a>
-        <a href="/logout">Logout</a>
+<aside class="sidebar">
 
-    </aside>
 
-    <main class="main">
+<h2>FD KHAN</h2>
 
-        <h1>Dashboard</h1>
 
-        <div class="card">
+<a href="/dashboard">
+Dashboard
+</a>
 
-            <h2>Total Bookings</h2>
 
-            <p>{{ bookings|length }}</p>
+<a href="/logout">
+Logout
+</a>
 
-        </div>
 
-        <div class="card">
 
-            <h2>Block Date & Time</h2>
+</aside>
 
-            <form action="/block_slot" method="POST">
 
-                <input
-                type="date"
-                name="date"
-                required>
 
-                <input
-                type="time"
-                name="time"
-                required>
 
-                <button
-                type="submit"
-                class="confirm-btn">
 
-                    Block Slot
 
-                </button>
 
-            </form>
+<main class="main">
 
-        </div>
 
-        <h2>Bookings</h2>
 
-        {% if bookings %}
 
-        <table>
 
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Grade</th>
-                <th>Subject</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Status</th>
-                <th>Message</th>
-                <th>Actions</th>
-            </tr>
+<h1>
+Dashboard
+</h1>
 
-            {% for b in bookings %}
 
-            <tr>
 
-                <td>{{ b.name }}</td>
 
-                <td>{{ b.email }}</td>
 
-                <td>{{ b.grade }}</td>
 
-                <td>{{ b.subject }}</td>
+<div class="card">
 
-                <td>{{ b.date }}</td>
 
-                <td>{{ b.time }}</td>
+<h2>
+Total Bookings
+</h2>
 
-                <td>
 
-                    {% if b.status == "Confirmed" %}
+<p>
+{{ bookings|length }}
+</p>
 
-                        <span class="status-confirmed">
-                            Confirmed
-                        </span>
 
-                    {% else %}
-
-                        <span class="status-pending">
-                            Pending
-                        </span>
-
-                    {% endif %}
-
-                </td>
-
-                <td>{{ b.message }}</td>
-
-                <td>
-
-                    {% if b.status != "Confirmed" %}
-
-                    <a
-                    href="/confirm_booking/{{ loop.index0 }}"
-                    class="confirm-btn">
-
-                        Confirm
-
-                    </a>
-
-                    {% endif %}
-
-                    <a
-                    href="/delete_booking/{{ loop.index0 }}"
-                    class="delete-btn"
-                    onclick="return confirm('Delete booking?');">
-
-                        Delete
-
-                    </a>
-
-                </td>
-
-            </tr>
-
-            {% endfor %}
-
-        </table>
-
-        {% else %}
-
-        <p>No bookings available.</p>
-
-        {% endif %}
-
-        <br><br>
-
-        <h2>Blocked Slots</h2>
-
-        {% if blocked_slots %}
-
-        <table>
-
-            <tr>
-                <th>Date</th>
-                <th>Time</th>
-            </tr>
-
-            {% for slot in blocked_slots %}
-
-            <tr>
-
-                <td>{{ slot.date }}</td>
-
-                <td>{{ slot.time }}</td>
-
-            </tr>
-
-            {% endfor %}
-
-        </table>
-
-        {% endif %}
-
-    </main>
 
 </div>
 
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+Block Date / Time
+</h2>
+
+
+
+
+<form action="/block_slot" method="POST">
+
+
+
+
+
+<label>
+Date
+</label>
+
+
+<input
+
+type="date"
+
+name="date"
+
+required>
+
+
+
+
+
+<br><br>
+
+
+
+
+
+<label>
+Time
+</label>
+
+
+
+
+
+<select name="time">
+
+
+
+<option value="">
+Select Time
+</option>
+
+
+
+{% for slot in time_slots %}
+
+
+<option value="{{ slot }}">
+
+{{ slot }}
+
+</option>
+
+
+
+{% endfor %}
+
+
+
+
+</select>
+
+
+
+
+
+<br><br>
+
+
+
+
+
+
+<label>
+
+
+<input
+
+type="checkbox"
+
+name="full_day">
+
+
+Block Entire Day
+
+
+</label>
+
+
+
+
+
+
+<br><br>
+
+
+
+
+
+<button
+
+type="submit"
+
+class="confirm-btn">
+
+
+Block Slot
+
+
+</button>
+
+
+
+
+
+
+</form>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<h2>
+Bookings
+</h2>
+
+
+
+
+
+
+
+{% if bookings %}
+
+
+
+
+
+<table>
+
+
+
+<tr>
+
+
+<th>
+Name
+</th>
+
+
+<th>
+Email
+</th>
+
+
+<th>
+Grade
+</th>
+
+
+<th>
+Subject
+</th>
+
+
+<th>
+Date
+</th>
+
+
+<th>
+Time
+</th>
+
+
+<th>
+Status
+</th>
+
+
+<th>
+Message
+</th>
+
+
+<th>
+Actions
+</th>
+
+
+
+</tr>
+
+
+
+
+
+
+
+
+
+{% for b in bookings %}
+
+
+
+
+
+<tr>
+
+
+
+<td>
+
+{{ b.name }}
+
+</td>
+
+
+
+
+<td>
+
+{{ b.email }}
+
+</td>
+
+
+
+
+<td>
+
+{{ b.grade }}
+
+</td>
+
+
+
+
+<td>
+
+{{ b.subject }}
+
+</td>
+
+
+
+
+<td>
+
+{{ b.date }}
+
+</td>
+
+
+
+
+<td>
+
+{{ b.time }}
+
+</td>
+
+
+
+
+
+
+<td>
+
+
+
+{% if b.status == "Confirmed" %}
+
+
+<span class="status-confirmed">
+
+Confirmed
+
+</span>
+
+
+
+
+{% else %}
+
+
+
+<span class="status-pending">
+
+Pending
+
+</span>
+
+
+
+{% endif %}
+
+
+
+</td>
+
+
+
+
+
+
+
+
+
+<td>
+
+{{ b.message }}
+
+</td>
+
+
+
+
+
+
+
+
+<td>
+
+
+
+
+
+{% if b.status != "Confirmed" %}
+
+
+
+
+
+<a
+
+href="/confirm_booking/{{ b.id }}"
+
+class="confirm-btn">
+
+
+Confirm
+
+
+</a>
+
+
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+<a
+
+href="/delete_booking/{{ b.id }}"
+
+class="delete-btn"
+
+onclick="return confirm('Delete booking?');">
+
+
+Delete
+
+
+</a>
+
+
+
+
+
+</td>
+
+
+
+
+
+
+</tr>
+
+
+
+
+
+{% endfor %}
+
+
+
+
+
+
+
+</table>
+
+
+
+
+
+
+
+{% else %}
+
+
+
+<p>
+No bookings available.
+</p>
+
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+<br><br>
+
+
+
+
+
+<h2>
+Blocked Slots
+</h2>
+
+
+
+
+
+
+{% if blocked_slots %}
+
+
+
+
+
+<table>
+
+
+
+
+<tr>
+
+
+<th>
+Date
+</th>
+
+
+<th>
+Time
+</th>
+
+
+<th>
+Action
+</th>
+
+
+
+</tr>
+
+
+
+
+
+
+
+
+
+{% for slot in blocked_slots %}
+
+
+
+
+
+
+<tr>
+
+
+
+<td>
+
+{{ slot.date }}
+
+</td>
+
+
+
+
+<td>
+
+{{ slot.time }}
+
+</td>
+
+
+
+
+
+
+<td>
+
+
+
+
+<a
+
+href="/unblock_slot/{{ slot.id }}"
+
+class="delete-btn">
+
+
+Unblock
+
+
+</a>
+
+
+
+
+
+
+</td>
+
+
+
+
+
+</tr>
+
+
+
+
+
+
+
+{% endfor %}
+
+
+
+
+
+
+</table>
+
+
+
+
+
+
+
+
+{% else %}
+
+
+
+<p>
+No blocked slots.
+</p>
+
+
+
+
+{% endif %}
+
+
+
+
+
+</main>
+
+
+
+</div>
+
+
+
+
 </body>
+
+
 </html>
