@@ -9,9 +9,7 @@
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -19,125 +17,133 @@
 FD KHAN ACADEMY
 </div>
 
-
 <nav>
 
 <a href="/">Home</a>
 
-<a href="{{ url_for('booking.booking_page') }}">Booking</a>
+<a href="{{ url_for('booking.booking_page') }}">Book Lesson</a>
 
-<a href="{{ url_for('store.store_page') }}">Store</a>
+<a href="{{ url_for('store.store_page') }}">Browse Courses</a>
+
+<a href="{{ url_for('auth.change_password') }}">Change Password</a>
 
 <a href="{{ url_for('auth.logout') }}">Logout</a>
-<a href="{{ url_for('auth.change_password') }}">
-Change Password
-</a>
 
 </nav>
 
 </header>
 
-
-
 <section class="section">
 
 <div class="container">
 
-
 <h1>
-Welcome {{ current_user.first_name }}
+Welcome back, {{ current_user.first_name }} 👋
 </h1>
-
-
 
 <div class="terminal-box">
 
-
-<h2>
-My Bookings
-</h2>
-
+<h2>📅 My Bookings</h2>
 
 {% if bookings %}
 
+<table width="100%">
+
+<tr>
+
+<th>Date</th>
+
+<th>Time</th>
+
+<th>Subject</th>
+
+<th>Status</th>
+
+</tr>
+
 {% for booking in bookings %}
 
-<p>
+<tr>
 
-{{ booking.date }}
--
-{{ booking.time }}
+<td>{{ booking.date }}</td>
 
-|
+<td>{{ booking.time }}</td>
 
-{{ booking.subject }}
+<td>{{ booking.subject }}</td>
 
-|
+<td>{{ booking.status }}</td>
 
-{{ booking.status }}
-
-</p>
-
+</tr>
 
 {% endfor %}
 
+</table>
 
 {% else %}
 
-<p>
-No bookings yet.
-</p>
+<p>No bookings yet.</p>
 
 {% endif %}
 
+<br>
 
+<a class="btn" href="{{ url_for('booking.booking_page') }}">
+Book Another Lesson
+</a>
 
+<hr>
 
-<h2>
-My Courses
-</h2>
-
+<h2>📚 My Courses</h2>
 
 {% if purchases %}
 
+<table width="100%">
+
+<tr>
+
+<th>Course ID</th>
+
+<th>Payment</th>
+
+</tr>
 
 {% for purchase in purchases %}
 
-<p>
+<tr>
 
-Course ID:
-{{ purchase.course_id }}
+<td>{{ purchase.course_id }}</td>
 
-</p>
+<td>{{ purchase.payment_status }}</td>
 
+</tr>
 
 {% endfor %}
 
+</table>
 
 {% else %}
 
-<p>
-No purchased courses yet.
-</p>
+<p>No purchased courses yet.</p>
 
 {% endif %}
 
+<br>
 
+<a class="btn" href="{{ url_for('store.store_page') }}">
+Browse Courses
+</a>
 
 </div>
-
 
 </div>
 
 </section>
-
 
 <footer>
 
 © 2026 FD Khan Academy
 
 </footer>
-
 
 </body>
 

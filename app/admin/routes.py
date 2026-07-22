@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
 
+from ..models import Booking
 
 admin = Blueprint(
     "admin",
@@ -19,7 +20,12 @@ def dashboard():
             url_for("student.dashboard")
         )
 
+    bookings = Booking.query.order_by(
+        Booking.date,
+        Booking.time
+    ).all()
 
     return render_template(
-        "admin_dashboard.html"
+        "admin_dashboard.html",
+        bookings=bookings
     )
