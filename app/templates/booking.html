@@ -74,36 +74,21 @@ Book A Session
 
 
 
-<form action="/submit_booking" method="POST">
+<form method="POST"></form>
 
 
 
 
 
 <input
-
 type="text"
-
-name="name"
-
-placeholder="Full Name"
-
-required>
-
-
-
+value="{{ current_user.first_name }} {{ current_user.last_name }}"
+readonly>
 
 <input
-
 type="email"
-
-name="email"
-
-placeholder="Email Address"
-
-required>
-
-
+value="{{ current_user.email }}"
+readonly>
 
 
 
