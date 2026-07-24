@@ -1,43 +1,10 @@
-<!-- services.html -->
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}
+Services | FD Khan Academy
+{% endblock %}
 
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Services | FD Khan Academy</title>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-</head>
-
-<body>
-
-<header>
-
-    <div class="logo">
-        FD KHAN ACADEMY
-    </div>
-
-    <nav>
-
-         <a href="{{ url_for('home') }}">Home</a>
-
-        <a href="{{ url_for('services') }}">Services</a>
-
-        <a href="{{ url_for('about') }}">About</a>
-
-       <a href="{{ url_for('booking') }}">Booking</a>
-
-        <a href="{{ url_for('store') }}">Online Store</a>
-
-    </nav>
-
-</header>
+{% block content %}
 
 <section class="section">
 
@@ -54,9 +21,9 @@
                 <h3>Mathematics Tutoring</h3>
 
                 <p>
-                    Comprehensive mathematics tutoring
-                    focused on conceptual understanding,
-                    problem-solving, and exam preparation.
+                    Comprehensive Mathematics tutoring focused on
+                    conceptual understanding, problem-solving,
+                    and exam preparation.
                 </p>
 
             </div>
@@ -67,8 +34,7 @@
 
                 <p>
                     Information Technology tutoring covering
-                    practical, theory 
-                    and analytical thinking.
+                    practical work, theory, and analytical thinking.
                 </p>
 
             </div>
@@ -78,9 +44,9 @@
                 <h3>Online Lessons</h3>
 
                 <p>
-                    Flexible virtual learning sessions
-                    designed to support students anywhere
-                    with guided explanations and resources.
+                    Flexible virtual learning sessions designed
+                    to support students anywhere with guided
+                    explanations and resources.
                 </p>
 
             </div>
@@ -91,10 +57,4 @@
 
 </section>
 
-<footer>
-    © 2026 FD Khan Academy
-</footer>
-
-</body>
-
-</html>
+{% endblock %}

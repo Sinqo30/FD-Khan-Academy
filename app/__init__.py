@@ -1,7 +1,7 @@
 from flask import Flask
 
 from config import Config
-
+from .main.routes import main
 from .extensions import db
 from .extensions import migrate
 from .extensions import login_manager
@@ -31,6 +31,8 @@ def create_app():
 
     from .payments.routes import payments
 
+    app.register_blueprint(main)
+
     app.register_blueprint(auth)
 
     app.register_blueprint(booking)
@@ -42,6 +44,8 @@ def create_app():
     app.register_blueprint(student)
 
     app.register_blueprint(payments)
+
+    
 
     with app.app_context():
         db.create_all()

@@ -127,7 +127,7 @@ def logout():
 
 
     return redirect(
-        url_for("home")
+        url_for("main.home")
     )
 @auth.route("/change-password", methods=["GET", "POST"])
 @login_required
@@ -170,4 +170,36 @@ def change_password():
 
     return render_template(
         "change_password.html"
+    )
+@auth.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+
+    if request.method == "POST":
+
+        email = request.form["email"]
+
+        user = User.query.filter_by(
+            email=email
+        ).first()
+
+        if user:
+
+            flash(
+                "Password reset feature coming soon.",
+                "success"
+            )
+
+        else:
+
+            flash(
+                "No account found with that email.",
+                "danger"
+            )
+
+        return redirect(
+            url_for("auth.login")
+        )
+
+    return render_template(
+        "forgot_password.html"
     )

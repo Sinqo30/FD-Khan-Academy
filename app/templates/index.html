@@ -1,92 +1,46 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %}
 
-    <title>FD Khan Academy</title>
+{% block title %}
+FD Khan Academy
+{% endblock %}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+{% block content %}
 
-<body>
+<section class="hero">
 
-    <header>
+    <div class="terminal-box">
 
-        <div class="logo">
-            FD KHAN ACADEMY
+        <div class="terminal-top">
+            <div class="circle red"></div>
+            <div class="circle yellow"></div>
+            <div class="circle green"></div>
         </div>
 
-        <nav>
+        <h1 id="typing-text" class="typing"></h1>
 
-<a href="{{ url_for('home') }}">
-Home
-</a>
+        <p class="subtitle">
 
-<a href="{{ url_for('services') }}">
-Services
-</a>
+            Mathematics • Information Technology • Academic Excellence
 
-<a href="{{ url_for('about') }}">
-About
-</a>
+            <br><br>
 
-<a href="{{ url_for('booking.booking') }}">
-Booking
-</a>
+            Helping high school students build confidence,
+            master IT and Mathematics,
+            and achieve exceptional academic results.
 
-<a href="{{ url_for('store.store_page') }}">
-Online Store
-</a>
+        </p>
 
-<a href="{{ url_for('auth.login') }}">
-Login
-</a>
+        <a href="{{ url_for('booking.booking_page') }}" class="btn">
 
-<a href="{{ url_for('auth.register') }}">
-Register
-</a>
+            Book A Session
 
-</nav>
+        </a>
 
-    </header>
+    </div>
 
-    <section class="hero">
+</section>
 
-        <div class="terminal-box">
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
-            <div class="terminal-top">
-                <div class="circle red"></div>
-                <div class="circle yellow"></div>
-                <div class="circle green"></div>
-            </div>
-
-            <h1 id="typing-text" class="typing"></h1>
-            <p class="subtitle">
-
-                Mathematics • Information technology • Academic Excellence
-
-                <br><br>
-
-                Helping highschool students build confidence,
-                master IT and Mathematics,
-                and achieve exceptional academic results.
-
-            </p>
-
-            <a href="{{ url_for('booking') }}" class="btn">
-                Book A Session
-            </a>
-
-        </div>
-
-    </section>
-
-    <footer>
-        © 2026 FD Khan Academy
-    </footer>
-
-   <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
-</html>
+{% endblock %}
