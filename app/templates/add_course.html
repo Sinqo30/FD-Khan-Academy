@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Add Course</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+FD KHAN ACADEMY
+</div>
+
+<nav>
+
+<a href="{{ url_for('admin.dashboard') }}">
+Dashboard
+</a>
+
+<a href="{{ url_for('admin.courses') }}">
+Courses
+</a>
+
+<a href="{{ url_for('auth.logout') }}">
+Logout
+</a>
+
+</nav>
+
+</header>
+
+<section class="section">
+
+<div class="container">
+
+<div class="terminal-box">
+
+<h1>Add Course</h1>
+
+<form method="POST">
+
+<input
+type="text"
+name="title"
+placeholder="Course Title"
+required>
+
+<textarea
+name="description"
+placeholder="Course Description"
+required>
+</textarea>
+
+<select
+name="grade"
+required>
+
+<option value="">Select Grade</option>
+
+<option>Grade 8</option>
+<option>Grade 9</option>
+<option>Grade 10</option>
+<option>Grade 11</option>
+<option>Grade 12</option>
+
+</select>
+
+<select
+name="subject"
+required>
+
+<option value="">Select Subject</option>
+
+<option>Mathematics</option>
+<option>Information Technology</option>
+
+</select>
+
+<input
+type="number"
+step="0.01"
+name="price"
+placeholder="Price"
+required>
+
+<button
+class="btn"
+type="submit">
+
+Add Course
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+</body>
+
+</html>

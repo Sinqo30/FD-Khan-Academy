@@ -1,10 +1,9 @@
-from flask import jsonify
-from ..models import BlockedSlot
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
 
 from ..extensions import db
-from ..models import Booking
+from ..models import Booking, BlockedSlot
+
 
 booking = Blueprint(
     "booking",
@@ -17,6 +16,41 @@ booking = Blueprint(
 def booking_page():
 
     if request.method == "POST":
+
+        # Check if another student already booked this slot
+        existing_booking = Booking.query.filter_by(
+            date=request.form["date"],
+            time=request.form["time"]
+        ).first()
+
+        if existing_booking:
+
+            flash(
+                "This time slot has already been booked. Please choose another time.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("booking.booking_page")
+            )
+
+        # Check if this student already has a booking at this time
+        my_booking = Booking.query.filter_by(
+            student_id=current_user.id,
+            date=request.form["date"],
+            time=request.form["time"]
+        ).first()
+
+        if my_booking:
+
+            flash(
+                "You already have a booking at this date and time.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("booking.booking_page")
+            )
 
         booking = Booking(
 
@@ -52,6 +86,8 @@ def booking_page():
     return render_template(
         "booking.html"
     )
+
+
 @booking.route("/get_available_slots")
 @login_required
 def get_available_slots():

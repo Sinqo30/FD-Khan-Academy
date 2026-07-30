@@ -107,6 +107,9 @@ const dateInput = document.getElementById("date");
 
 const timeSelect = document.getElementById("time");
 
+const today = new Date().toISOString().split("T")[0];
+dateInput.min = today;
+
 dateInput.addEventListener("change", function(){
 
     let selectedDate = this.value;

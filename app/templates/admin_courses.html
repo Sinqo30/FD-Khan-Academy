@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Manage Courses</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin.css') }}">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<h2>FD KHAN</h2>
+
+<a href="{{ url_for('admin.dashboard') }}">
+Dashboard
+</a>
+
+<a href="{{ url_for('admin.courses') }}">
+Courses
+</a>
+
+<a href="{{ url_for('auth.logout') }}">
+Logout
+</a>
+
+</aside>
+
+<main class="main">
+
+<h1>Manage Courses</h1>
+
+<a class="btn"
+href="{{ url_for('admin.add_course') }}">
+
++ Add Course
+
+</a>
+<a class="btn"
+href="{{ url_for('admin.add_lesson') }}">
+
+Upload Lesson
+
+</a>
+
+<br><br>
+
+{% if courses %}
+
+<table>
+
+<tr>
+
+<th>Title</th>
+
+<th>Grade</th>
+
+<th>Subject</th>
+
+<th>Price</th>
+
+</tr>
+
+{% for course in courses %}
+
+<tr>
+
+<td>{{ course.title }}</td>
+
+<td>{{ course.grade }}</td>
+
+<td>{{ course.subject }}</td>
+
+<td>${{ course.price }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% else %}
+
+<p>No courses yet.</p>
+
+{% endif %}
+
+</main>
+
+</div>
+
+</body>
+
+</html>

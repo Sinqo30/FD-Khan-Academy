@@ -129,3 +129,27 @@ tr:hover {
     color: #00ff88;
     font-weight: bold;
 }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+th {
+    white-space: nowrap;
+}
+
+td {
+    vertical-align: middle;
+}
+td .btn {
+    margin-right: 8px;
+    display: inline-block;
+}

@@ -1,342 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-<title>Admin Dashboard</title>
+    <meta charset="UTF-8">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Admin Dashboard | FD Khan Academy</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
-
-
 <body>
 
+<header>
 
+    <div class="logo">
+        FD KHAN ACADEMY
+    </div>
 
-<div class="layout">
+    <nav>
 
+    <a href="{{ url_for('main.home') }}">Home</a>
 
+    <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
 
-<aside class="sidebar">
+    <a href="{{ url_for('admin.courses') }}">Courses</a>
 
+    <a href="{{ url_for('auth.logout') }}">Logout</a>
 
-<h2>FD KHAN</h2>
+    </nav>
 
+</header>
 
-<a href="/dashboard">
-Dashboard
-</a>
+<section class="section">
 
-
-<a href="/logout">
-Logout
-</a>
-
-
-
-</aside>
-
-
-
-
-
-
-
-<main class="main">
-
-
-
-
+<div class="container">
 
 <h1>
-Dashboard
+Admin Dashboard
 </h1>
 
-
-
-
-
-
-<div class="card">
-
+<div class="terminal-box">
 
 <h2>
-Total Bookings
+Total Bookings: {{ bookings|length }}
 </h2>
-
-
-<p>
-{{ bookings|length }}
-</p>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="card">
-
-
-<h2>
-Block Date / Time
-</h2>
-
-
-
-
-<form action="/block_slot" method="POST">
-
-
-
-
-
-<label>
-Date
-</label>
-
-
-<input
-
-type="date"
-
-name="date"
-
-required>
-
-
-
-
-
-<br><br>
-
-
-
-
-
-<label>
-Time
-</label>
-
-
-
-
-
-<select name="time">
-
-
-
-<option value="">
-Select Time
-</option>
-
-
-
-{% for slot in time_slots %}
-
-
-<option value="{{ slot }}">
-
-{{ slot }}
-
-</option>
-
-
-
-{% endfor %}
-
-
-
-
-</select>
-
-
-
-
-
-<br><br>
-
-
-
-
-
-
-<label>
-
-
-<input
-
-type="checkbox"
-
-name="full_day">
-
-
-Block Entire Day
-
-
-</label>
-
-
-
-
-
-
-<br><br>
-
-
-
-
-
-<button
-
-type="submit"
-
-class="confirm-btn">
-
-
-Block Slot
-
-
-</button>
-
-
-
-
-
-
-</form>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-<h2>
-Bookings
-</h2>
-
-
-
-
-
-
 
 {% if bookings %}
 
-
-
-
-
 <table>
-
-
 
 <tr>
 
-
-<th>
-Name
-</th>
-
-
-<th>
-Email
-</th>
-
-
-<th>
-Grade
-</th>
-
-
-<th>
-Subject
-</th>
-
-
-<th>
-Date
-</th>
-
-
-<th>
-Time
-</th>
-
-
-<th>
-Status
-</th>
-
-
-<th>
-Message
-</th>
-
-
-<th>
-Actions
-</th>
-
-
+<th>Student</th>
+<th>Email</th>
+<th>Grade</th>
+<th>Subject</th>
+<th>Date</th>
+<th>Time</th>
+<th>Status</th>
+<th>Actions</th>
 
 </tr>
 
-
-
-
-
-
-
-
-
 {% for b in bookings %}
-
-
-
-
 
 <tr>
 
-
-
 <td>
 
-{{ b.name }}
+{{ b.student.first_name }} {{ b.student.last_name }}
 
 </td>
 
-
-
-
 <td>
 
-{{ b.email }}
+{{ b.student.email }}
 
 </td>
-
-
-
 
 <td>
 
@@ -344,17 +88,11 @@ Actions
 
 </td>
 
-
-
-
 <td>
 
 {{ b.subject }}
 
 </td>
-
-
-
 
 <td>
 
@@ -362,346 +100,66 @@ Actions
 
 </td>
 
-
-
-
 <td>
 
 {{ b.time }}
 
 </td>
 
-
-
-
-
-
 <td>
 
-
-
-{% if b.status == "Confirmed" %}
-
-
-<span class="status-confirmed">
-
-Confirmed
-
-</span>
-
-
-
-
-{% else %}
-
-
-
-<span class="status-pending">
-
-Pending
-
-</span>
-
-
-
-{% endif %}
-
-
+{{ b.status }}
 
 </td>
 
-
-
-
-
-
-
-
-
 <td>
 
-{{ b.message }}
+{% if b.status == "Pending" %}
 
-</td>
-
-
-
-
-
-
-
-
-<td>
-
-
-
-
-
-{% if b.status != "Confirmed" %}
-
-
-
-
-
-<a
-
-href="/confirm_booking/{{ b.id }}"
-
-class="confirm-btn">
-
-
-Confirm
-
-
+<a class="btn"
+href="{{ url_for('admin.approve_booking', booking_id=b.id) }}">
+Approve
 </a>
 
-
-
-
+<a class="btn"
+href="{{ url_for('admin.decline_booking', booking_id=b.id) }}">
+Decline
+</a>
 
 {% endif %}
 
-
-
-
-
-
-
-
-
-<a
-
-href="/delete_booking/{{ b.id }}"
-
-class="delete-btn"
-
-onclick="return confirm('Delete booking?');">
-
-
+<a class="btn"
+href="{{ url_for('admin.delete_booking', booking_id=b.id) }}"
+onclick="return confirm('Delete this booking?');">
 Delete
-
-
 </a>
-
-
-
-
 
 </td>
 
-
-
-
-
-
 </tr>
-
-
-
-
 
 {% endfor %}
 
-
-
-
-
-
-
 </table>
-
-
-
-
-
-
 
 {% else %}
 
-
-
-<p>
-No bookings available.
-</p>
-
-
-
+<p>No bookings have been submitted yet.</p>
 
 {% endif %}
-
-
-
-
-
-
-
-
-
-<br><br>
-
-
-
-
-
-<h2>
-Blocked Slots
-</h2>
-
-
-
-
-
-
-{% if blocked_slots %}
-
-
-
-
-
-<table>
-
-
-
-
-<tr>
-
-
-<th>
-Date
-</th>
-
-
-<th>
-Time
-</th>
-
-
-<th>
-Action
-</th>
-
-
-
-</tr>
-
-
-
-
-
-
-
-
-
-{% for slot in blocked_slots %}
-
-
-
-
-
-
-<tr>
-
-
-
-<td>
-
-{{ slot.date }}
-
-</td>
-
-
-
-
-<td>
-
-{{ slot.time }}
-
-</td>
-
-
-
-
-
-
-<td>
-
-
-
-
-<a
-
-href="/unblock_slot/{{ slot.id }}"
-
-class="delete-btn">
-
-
-Unblock
-
-
-</a>
-
-
-
-
-
-
-</td>
-
-
-
-
-
-</tr>
-
-
-
-
-
-
-
-{% endfor %}
-
-
-
-
-
-
-</table>
-
-
-
-
-
-
-
-
-{% else %}
-
-
-
-<p>
-No blocked slots.
-</p>
-
-
-
-
-{% endif %}
-
-
-
-
-
-</main>
-
-
 
 </div>
 
+</div>
 
+</section>
 
+<footer>
+
+© 2026 FD Khan Academy
+
+</footer>
 
 </body>
-
 
 </html>

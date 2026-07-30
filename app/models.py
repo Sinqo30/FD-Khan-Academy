@@ -57,9 +57,10 @@ class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     student_id = db.Column(
-        db.Integer,
-        db.ForeignKey("users.id")
-    )
+    db.Integer,
+    db.ForeignKey("users.id"),
+    nullable=False
+)
 
     grade = db.Column(db.String(20))
 
@@ -120,18 +121,19 @@ class Video(db.Model):
 
     course_id = db.Column(
         db.Integer,
-        db.ForeignKey("courses.id")
+        db.ForeignKey("courses.id"),
+        nullable=False
     )
 
     title = db.Column(db.String(200))
 
     caption = db.Column(db.Text)
 
-    vimeo_url = db.Column(db.String(500))
+    video_file = db.Column(db.String(255))
+
+    price = db.Column(db.Float)
 
     order = db.Column(db.Integer)
-
-
 class Purchase(db.Model):
 
     __tablename__ = "purchases"
@@ -140,12 +142,20 @@ class Purchase(db.Model):
 
     student_id = db.Column(
         db.Integer,
-        db.ForeignKey("users.id")
+        db.ForeignKey("users.id"),
+        nullable=False
     )
 
     course_id = db.Column(
         db.Integer,
-        db.ForeignKey("courses.id")
+        db.ForeignKey("courses.id"),
+        nullable=True
+    )
+
+    video_id = db.Column(
+        db.Integer,
+        db.ForeignKey("videos.id"),
+        nullable=True
     )
 
     amount = db.Column(db.Float)
@@ -154,3 +164,4 @@ class Purchase(db.Model):
         db.String(50),
         default="Pending"
     )
+    
