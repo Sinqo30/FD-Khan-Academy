@@ -12,17 +12,20 @@ class Config:
         "sqlite:///fdkhan.db"
     )
 
-    print("DATABASE:", SQLALCHEMY_DATABASE_URI)
-
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    UPLOAD_FOLDER = "app/static/uploads"
+    UPLOAD_FOLDER = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "app",
+        "static",
+        "uploads"
+    )
+
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
     MAX_CONTENT_LENGTH = 500 * 1024 * 1024
 
-
-    # PayPal Sandbox
-
+    # PayPal
     PAYPAL_CLIENT_ID = os.environ.get(
         "PAYPAL_CLIENT_ID"
     )
@@ -30,4 +33,3 @@ class Config:
     PAYPAL_CLIENT_SECRET = os.environ.get(
         "PAYPAL_CLIENT_SECRET"
     )
-
