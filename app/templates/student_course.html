@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>{{ course.title }} | FD Khan Academy</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+FD KHAN ACADEMY
+</div>
+
+
+<nav>
+
+<a href="{{ url_for('student.dashboard') }}">
+Dashboard
+</a>
+
+<a href="{{ url_for('student.courses') }}">
+Courses
+</a>
+
+<a href="{{ url_for('auth.logout') }}">
+Logout
+</a>
+
+</nav>
+
+</header>
+
+
+
+<section class="section">
+
+
+<div class="container">
+
+
+<div class="terminal-box">
+
+
+<div class="terminal-top">
+
+<div class="circle red"></div>
+
+<div class="circle yellow"></div>
+
+<div class="circle green"></div>
+
+</div>
+
+
+<h1 class="section-title">
+📚 {{ course.title }}
+</h1>
+
+
+<p class="subtitle">
+{{ course.description }}
+</p>
+
+
+</div>
+
+
+
+
+<h2 class="section-title">
+🎬 Course Lessons
+</h2>
+
+
+
+
+{% if lessons %}
+
+
+<div class="card-grid">
+
+
+{% for lesson in lessons %}
+
+
+<div class="video-card">
+
+
+<div class="video-placeholder">
+
+▶ Lesson {{ lesson.order }}
+
+</div>
+
+
+<h3>
+{{ lesson.title }}
+</h3>
+
+
+<p class="subtitle">
+{{ lesson.caption }}
+</p>
+
+
+<p>
+<strong>Price:</strong>
+${{ lesson.price }}
+</p>
+
+
+<a class="btn"
+href="{{ url_for('student.lesson', lesson_id=lesson.id) }}">
+Open Lesson
+</a>
+
+
+</div>
+
+
+{% endfor %}
+
+
+</div>
+
+
+{% else %}
+
+
+<div class="terminal-box">
+
+<p>
+No lessons available for this course yet.
+</p>
+
+</div>
+
+
+{% endif %}
+
+
+
+<br>
+
+
+<a class="btn"
+href="{{ url_for('student.courses') }}">
+← Back to Courses
+</a>
+
+
+
+</div>
+
+
+</section>
+
+
+
+<footer>
+
+© 2026 FD Khan Academy
+
+</footer>
+
+
+</body>
+
+</html>

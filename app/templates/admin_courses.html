@@ -45,48 +45,63 @@ href="{{ url_for('admin.add_course') }}">
 + Add Course
 
 </a>
-<a class="btn"
-href="{{ url_for('admin.add_lesson') }}">
-
-Upload Lesson
-
-</a>
 
 <br><br>
-
 {% if courses %}
 
 <table>
 
+
 <tr>
-
-<th>Title</th>
-
-<th>Grade</th>
-
-<th>Subject</th>
-
-<th>Price</th>
-
+    <th>Title</th>
+    <th>Grade</th>
+    <th>Subject</th>
+    <th>Price</th>
+    <th>Actions</th>
 </tr>
 
 {% for course in courses %}
 
 <tr>
 
-<td>{{ course.title }}</td>
+    <td>{{ course.title }}</td>
 
-<td>{{ course.grade }}</td>
+    <td>{{ course.grade }}</td>
 
-<td>{{ course.subject }}</td>
+    <td>{{ course.subject }}</td>
 
-<td>${{ course.price }}</td>
+    <td>${{ course.price }}</td>
+
+    <td>
+
+<a class="btn"
+href="{{ url_for('admin.manage_lessons', course_id=course.id) }}">
+Lessons
+</a>
+
+
+<a class="btn"
+href="{{ url_for('admin.edit_course', course_id=course.id) }}">
+Edit
+</a>
+
+
+<a class="delete-btn"
+href="{{ url_for('admin.delete_course', course_id=course.id) }}"
+onclick="return confirm('Delete this course? All lessons will also be deleted.')">
+Delete
+</a>
+
+
+</td>
+    
 
 </tr>
 
 {% endfor %}
 
 </table>
+
 
 {% else %}
 

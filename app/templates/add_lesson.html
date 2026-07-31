@@ -47,32 +47,12 @@
 
 <div class="terminal-box">
 
-<h1>Upload Lesson</h1>
+<h1>Upload Lesson - {{ course.title }}</h1>
 
 <form method="POST"
       enctype="multipart/form-data">
 
-<label>Course</label>
 
-<select
-name="course_id"
-required>
-
-<option value="">
-Select Course
-</option>
-
-{% for course in courses %}
-
-<option value="{{ course.id }}">
-{{ course.title }}
-</option>
-
-{% endfor %}
-
-</select>
-
-<br><br>
 
 <input
 type="text"

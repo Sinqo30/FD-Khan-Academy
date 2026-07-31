@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Courses | FD Khan Academy</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+FD KHAN ACADEMY
+</div>
+
+<nav>
+
+<a href="{{ url_for('student.dashboard') }}">
+Dashboard
+</a>
+
+<a href="{{ url_for('student.courses') }}">
+Courses
+</a>
+
+<a href="{{ url_for('auth.logout') }}">
+Logout
+</a>
+
+</nav>
+
+</header>
+
+
+<section class="section">
+
+<div class="container">
+
+<h1>Available Courses</h1>
+
+
+{% if courses %}
+
+{% for course in courses %}
+
+<div class="terminal-box">
+
+<h2>{{ course.title }}</h2>
+
+<p>{{ course.description }}</p>
+
+
+<a class="btn"
+href="{{ url_for('student.course', course_id=course.id) }}">
+View Course
+</a>
+
+
+</div>
+
+<br>
+
+{% endfor %}
+
+
+{% else %}
+
+<p>No courses available.</p>
+
+{% endif %}
+
+
+</div>
+
+</section>
+
+
+</body>
+
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>{{ lesson.title }}</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+<script src="https://www.paypal.com/sdk/js?client-id={{ config.PAYPAL_CLIENT_ID }}&currency=USD"></script>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+FD KHAN ACADEMY
+</div>
+
+
+<nav>
+
+<a href="{{ url_for('student.dashboard') }}">
+Dashboard
+</a>
+
+<a href="{{ url_for('student.courses') }}">
+Courses
+</a>
+
+<a href="{{ url_for('auth.logout') }}">
+Logout
+</a>
+
+</nav>
+
+</header>
+
+
+
+<section class="section">
+
+
+<div class="container">
+
+
+<div class="terminal-box">
+
+
+<h1>
+{{ lesson.title }}
+</h1>
+
+
+<p>
+{{ lesson.caption }}
+</p>
+
+
+</div>
+
+
+
+{% if purchased %}
+
+
+<div class="terminal-box">
+
+
+<h2>
+🎬 Lesson Video
+</h2>
+
+
+<video width="900" controls>
+
+
+<source
+src="{{ url_for('static', filename='uploads/' + lesson.video_file) }}"
+type="video/mp4">
+
+
+Your browser does not support video.
+
+
+</video>
+
+
+</div>
+
+
+
+{% else %}
+
+
+
+<div class="terminal-box">
+
+
+<h2>
+🔒 Lesson Locked
+</h2>
+
+
+<p>
+Purchase this lesson to watch the video.
+</p>
+
+
+<h3>
+${{ lesson.price }}
+</h3>
+
+
+<div id="paypal-button-container"></div>
+
+
+</div>
+
+
+
+{% endif %}
+
+
+
+</div>
+
+
+</section>
+
+
+
+<footer>
+
+© 2026 FD Khan Academy
+
+</footer>
+
+
+
+<script>
+
+{% if not purchased %}
+
+
+paypal.Buttons({
+
+createOrder:function(data, actions){
+
+
+return actions.order.create({
+
+purchase_units:[{
+
+amount:{
+
+value:"{{ lesson.price }}"
+
+}
+
+}]
+
+});
+
+
+},
+
+
+
+onApprove:function(data, actions){
+
+return actions.order.capture().then(function(details){
+
+window.location.href =
+"/payment-success/{{ lesson.id }}";
+
+});
+
+}
+
+
+
+}).render('#paypal-button-container');
+
+{% endif %}
+
+
+</script>
+
+
+
+</body>
+
+</html>

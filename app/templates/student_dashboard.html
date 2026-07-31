@@ -23,7 +23,7 @@ FD KHAN ACADEMY
 
 <a href="{{ url_for('booking.booking_page') }}">Book Lesson</a>
 
-<a href="{{ url_for('store.store_page') }}">Browse Courses</a>
+<a href="{{ url_for('student.courses') }}">Browse Courses</a>
 
 <a href="{{ url_for('auth.change_password') }}">Change Password</a>
 
@@ -91,6 +91,7 @@ Welcome back, {{ current_user.first_name }} 👋
 Book Another Lesson
 </a>
 
+
 <hr>
 
 <h2>📚 My Courses</h2>
@@ -129,10 +130,9 @@ Book Another Lesson
 
 <br>
 
-<a class="btn" href="{{ url_for('store.store_page') }}">
+<a class="btn" href="{{ url_for('student.courses') }}">
 Browse Courses
 </a>
-
 </div>
 
 </div>

@@ -80,7 +80,71 @@ def add_course():
 
     return render_template("add_course.html")
 
+@admin.route("/courses/edit/<int:course_id>", methods=["GET", "POST"])
+@login_required
+def edit_course(course_id):
 
+    if not current_user.is_admin:
+        return redirect(url_for("student.dashboard"))
+
+    course = Course.query.get_or_404(course_id)
+
+    if request.method == "POST":
+
+        course.title = request.form["title"]
+        course.description = request.form["description"]
+        course.grade = request.form["grade"]
+        course.subject = request.form["subject"]
+        course.price = float(request.form["price"])
+
+        print("NEW TITLE:", request.form["title"])
+
+        db.session.commit()
+
+        db.session.refresh(course)
+        print("SAVED TITLE:", course.title)
+
+        flash("Course updated successfully!", "success")
+
+        return redirect(url_for("admin.courses"))
+
+    return render_template(
+        "edit_course.html",
+        course=course
+    )
+
+@admin.route("/courses/delete/<int:course_id>")
+@login_required
+def delete_course(course_id):
+
+    if not current_user.is_admin:
+        return redirect(url_for("student.dashboard"))
+
+
+    course = Course.query.get_or_404(course_id)
+
+
+    # delete lessons belonging to course first
+    lessons = Video.query.filter_by(
+        course_id=course.id
+    ).all()
+
+
+    for lesson in lessons:
+        db.session.delete(lesson)
+
+
+    db.session.delete(course)
+
+    db.session.commit()
+
+
+    flash("Course deleted successfully!", "success")
+
+
+    return redirect(
+        url_for("admin.courses")
+    )
 @admin.route("/booking/<int:booking_id>/approve")
 @login_required
 def approve_booking(booking_id):
@@ -139,14 +203,14 @@ def delete_booking(booking_id):
     return redirect(
         url_for("admin.dashboard")
     )
-@admin.route("/lessons/add", methods=["GET", "POST"])
+@admin.route("/lessons/add/<int:course_id>", methods=["GET", "POST"])
 @login_required
-def add_lesson():
+def add_lesson(course_id):
 
     if not current_user.is_admin:
         return redirect(url_for("student.dashboard"))
 
-    courses = Course.query.all()
+    course = Course.query.get_or_404(course_id)
 
     if request.method == "POST":
 
@@ -154,7 +218,6 @@ def add_lesson():
         caption = request.form["caption"]
         price = float(request.form["price"])
         order = int(request.form["order"])
-        course_id = int(request.form["course_id"])
 
         video = request.files["video"]
 
@@ -168,7 +231,7 @@ def add_lesson():
         )
 
         lesson = Video(
-            course_id=course_id,
+            course_id=course.id,
             title=title,
             caption=caption,
             video_file=filename,
@@ -181,9 +244,29 @@ def add_lesson():
 
         flash("Lesson uploaded successfully!", "success")
 
-        return redirect(url_for("admin.courses"))
+        return redirect(
+            url_for("admin.manage_lessons", course_id=course.id)
+        )
 
     return render_template(
         "add_lesson.html",
-        courses=courses
+        course=course
+    )
+@admin.route("/courses/<int:course_id>/lessons")
+@login_required
+def manage_lessons(course_id):
+
+    if not current_user.is_admin:
+        return redirect(url_for("student.dashboard"))
+
+    course = Course.query.get_or_404(course_id)
+
+    lessons = Video.query.filter_by(
+        course_id=course.id
+    ).order_by(Video.order).all()
+
+    return render_template(
+        "manage_lessons.html",
+        course=course,
+        lessons=lessons
     )
