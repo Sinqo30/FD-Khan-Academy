@@ -9,9 +9,9 @@ class Config:
     )
 
     SQLALCHEMY_DATABASE_URI = os.environ.get(
-        "DATABASE_URL",
-        "sqlite:///fdkhan.db"
-    )
+    "DATABASE_URL",
+    "sqlite:////tmp/fdkhan.db"
+)
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
