@@ -20,7 +20,6 @@ from ..models import (
     Booking,
     Course,
     Video,
-    SiteSetting,
     BusinessSettings,
     User
 )
@@ -32,6 +31,10 @@ admin = Blueprint(
     url_prefix="/admin"
 )
 
+
+# =========================
+# DASHBOARD
+# =========================
 
 @admin.route("/dashboard")
 @login_required
@@ -52,6 +55,10 @@ def dashboard():
         bookings=bookings
     )
 
+
+# =========================
+# COURSES
+# =========================
 
 @admin.route("/courses")
 @login_required
@@ -106,7 +113,10 @@ def add_course():
     )
 
 
-@admin.route("/courses/edit/<int:course_id>", methods=["GET","POST"])
+@admin.route(
+    "/courses/edit/<int:course_id>",
+    methods=["GET","POST"]
+)
 @login_required
 def edit_course(course_id):
 
@@ -115,7 +125,9 @@ def edit_course(course_id):
             url_for("student.dashboard")
         )
 
-    course = Course.query.get_or_404(course_id)
+    course = Course.query.get_or_404(
+        course_id
+    )
 
     if request.method == "POST":
 
@@ -123,7 +135,9 @@ def edit_course(course_id):
         course.description = request.form["description"]
         course.grade = request.form["grade"]
         course.subject = request.form["subject"]
-        course.price = float(request.form["price"])
+        course.price = float(
+            request.form["price"]
+        )
 
         db.session.commit()
 
@@ -136,10 +150,12 @@ def edit_course(course_id):
             url_for("admin.courses")
         )
 
+
     return render_template(
         "edit_course.html",
         course=course
     )
+
 
 
 @admin.route("/courses/delete/<int:course_id>")
@@ -151,23 +167,31 @@ def delete_course(course_id):
             url_for("student.dashboard")
         )
 
-    course = Course.query.get_or_404(course_id)
+
+    course = Course.query.get_or_404(
+        course_id
+    )
+
 
     lessons = Video.query.filter_by(
         course_id=course.id
     ).all()
 
+
     for lesson in lessons:
         db.session.delete(lesson)
+
 
     db.session.delete(course)
 
     db.session.commit()
 
+
     flash(
         "Course deleted!",
         "success"
     )
+
 
     return redirect(
         url_for("admin.courses")
@@ -188,17 +212,21 @@ def approve_booking(booking_id):
             url_for("student.dashboard")
         )
 
+
     booking = Booking.query.get_or_404(
         booking_id
     )
+
 
     booking.status = "Confirmed"
 
     db.session.commit()
 
+
     return redirect(
         url_for("admin.dashboard")
     )
+
 
 
 @admin.route("/booking/<int:booking_id>/decline")
@@ -210,17 +238,21 @@ def decline_booking(booking_id):
             url_for("student.dashboard")
         )
 
+
     booking = Booking.query.get_or_404(
         booking_id
     )
+
 
     booking.status = "Declined"
 
     db.session.commit()
 
+
     return redirect(
         url_for("admin.dashboard")
     )
+
 
 
 @admin.route("/booking/<int:booking_id>/delete")
@@ -232,23 +264,33 @@ def delete_booking(booking_id):
             url_for("student.dashboard")
         )
 
+
     booking = Booking.query.get_or_404(
         booking_id
     )
 
-    db.session.delete(booking)
+
+    db.session.delete(
+        booking
+    )
 
     db.session.commit()
+
 
     return redirect(
         url_for("admin.dashboard")
     )
+
+
 # =========================
 # LESSONS
 # =========================
 
 
-@admin.route("/lessons/add/<int:course_id>", methods=["GET","POST"])
+@admin.route(
+    "/lessons/add/<int:course_id>",
+    methods=["GET","POST"]
+)
 @login_required
 def add_lesson(course_id):
 
@@ -257,9 +299,11 @@ def add_lesson(course_id):
             url_for("student.dashboard")
         )
 
+
     course = Course.query.get_or_404(
         course_id
     )
+
 
     if request.method == "POST":
 
@@ -269,12 +313,14 @@ def add_lesson(course_id):
             video.filename
         )
 
+
         video.save(
             os.path.join(
                 current_app.config["UPLOAD_FOLDER"],
                 filename
             )
         )
+
 
         lesson = Video(
             course_id=course.id,
@@ -289,16 +335,19 @@ def add_lesson(course_id):
             )
         )
 
+
         db.session.add(
             lesson
         )
 
         db.session.commit()
 
+
         flash(
             "Lesson uploaded!",
             "success"
         )
+
 
         return redirect(
             url_for(
@@ -306,6 +355,7 @@ def add_lesson(course_id):
                 course_id=course.id
             )
         )
+
 
     return render_template(
         "add_lesson.html",
@@ -323,15 +373,18 @@ def manage_lessons(course_id):
             url_for("student.dashboard")
         )
 
+
     course = Course.query.get_or_404(
         course_id
     )
+
 
     lessons = Video.query.filter_by(
         course_id=course.id
     ).order_by(
         Video.order
     ).all()
+
 
     return render_template(
         "manage_lessons.html",
@@ -341,7 +394,10 @@ def manage_lessons(course_id):
 
 
 
-@admin.route("/lessons/edit/<int:lesson_id>", methods=["GET","POST"])
+@admin.route(
+    "/lessons/edit/<int:lesson_id>",
+    methods=["GET","POST"]
+)
 @login_required
 def edit_lesson(lesson_id):
 
@@ -350,30 +406,32 @@ def edit_lesson(lesson_id):
             url_for("student.dashboard")
         )
 
+
     lesson = Video.query.get_or_404(
         lesson_id
     )
 
+
     if request.method == "POST":
 
         lesson.title = request.form["title"]
-
         lesson.caption = request.form["caption"]
-
         lesson.price = float(
             request.form["price"]
         )
-
         lesson.order = int(
             request.form["order"]
         )
 
+
         db.session.commit()
+
 
         flash(
             "Lesson updated!",
             "success"
         )
+
 
         return redirect(
             url_for(
@@ -381,6 +439,7 @@ def edit_lesson(lesson_id):
                 course_id=lesson.course_id
             )
         )
+
 
     return render_template(
         "edit_lesson.html",
@@ -398,11 +457,14 @@ def delete_lesson(lesson_id):
             url_for("student.dashboard")
         )
 
+
     lesson = Video.query.get_or_404(
         lesson_id
     )
 
+
     course_id = lesson.course_id
+
 
     db.session.delete(
         lesson
@@ -410,10 +472,12 @@ def delete_lesson(lesson_id):
 
     db.session.commit()
 
+
     flash(
         "Lesson deleted!",
         "success"
     )
+
 
     return redirect(
         url_for(
@@ -423,83 +487,32 @@ def delete_lesson(lesson_id):
     )
 
 
-
 # =========================
-# SITE SETTINGS
+# PAYMENT SETTINGS
 # =========================
 
 
-@admin.route("/settings", methods=["GET", "POST"])
+@admin.route(
+    "/payment-settings",
+    methods=["GET","POST"]
+)
 @login_required
-def settings():
+def payment_settings():
 
     if not current_user.is_admin:
         return redirect(
             url_for("student.dashboard")
         )
 
-    setting = SiteSetting.query.first()
-
-    if setting is None:
-
-        setting = SiteSetting()
-
-        db.session.add(
-            setting
-        )
-
-        db.session.commit()
-
-
-    if request.method == "POST":
-
-        setting.paypal_client_id = request.form[
-            "paypal_client_id"
-        ]
-
-        db.session.commit()
-
-        flash(
-            "Settings updated successfully!",
-            "success"
-        )
-
-        return redirect(
-            url_for("admin.settings")
-        )
-
-
-    return render_template(
-        "admin_settings.html",
-        setting=setting
-    )
-
-
-
-# =========================
-# PAYPAL SETTINGS
-# =========================
-
-
-@admin.route("/payment-settings", methods=["GET","POST"])
-@login_required
-def payment_settings():
-
-    if not current_user.is_admin:
-        return "Unauthorized"
-
 
     settings = BusinessSettings.query.first()
 
 
-    if not settings:
+    if settings is None:
 
         settings = BusinessSettings()
 
-        db.session.add(
-            settings
-        )
-
+        db.session.add(settings)
         db.session.commit()
 
 
@@ -513,7 +526,9 @@ def payment_settings():
             "currency"
         ]
 
+
         db.session.commit()
+
 
         flash(
             "Payment settings updated!",
@@ -525,7 +540,8 @@ def payment_settings():
         "admin_payment_settings.html",
         settings=settings
     )
-id="u3d8xk"
+
+
 # =========================
 # USER MANAGEMENT
 # =========================
@@ -540,7 +556,9 @@ def users():
             url_for("student.dashboard")
         )
 
+
     users = User.query.all()
+
 
     return render_template(
         "admin_users.html",
@@ -558,18 +576,22 @@ def make_admin(user_id):
             url_for("student.dashboard")
         )
 
+
     user = User.query.get_or_404(
         user_id
     )
+
 
     user.is_admin = True
 
     db.session.commit()
 
+
     flash(
         "User is now an admin!",
         "success"
     )
+
 
     return redirect(
         url_for("admin.users")
@@ -586,12 +608,12 @@ def remove_admin(user_id):
             url_for("student.dashboard")
         )
 
+
     user = User.query.get_or_404(
         user_id
     )
 
 
-    # Prevent removing yourself
     if user.id == current_user.id:
 
         flash(
