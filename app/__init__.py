@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import os
+import tempfile
 
 from flask import Flask
 
@@ -16,12 +17,17 @@ from .main.routes import main
 
 def create_app():
 
-    app = Flask(
-        __name__,
-        instance_path="/tmp/instance"
+    instance_path = os.path.join(
+        tempfile.gettempdir(),
+        "instance"
     )
 
-    os.makedirs(app.instance_path, exist_ok=True)
+    os.makedirs(instance_path, exist_ok=True)
+
+    app = Flask(
+        __name__,
+        instance_path=instance_path
+    )
 
     app.config.from_object(Config)
 
