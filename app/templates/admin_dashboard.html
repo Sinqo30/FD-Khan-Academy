@@ -13,7 +13,9 @@
 
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -21,38 +23,71 @@
         FD KHAN ACADEMY
     </div>
 
+
     <nav>
 
-    <a href="{{ url_for('main.home') }}">Home</a>
+        <a href="{{ url_for('main.home') }}">
+            Home
+        </a>
 
-    <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
 
-    <a href="{{ url_for('admin.courses') }}">Courses</a>
+        <a href="{{ url_for('admin.dashboard') }}">
+            Dashboard
+        </a>
 
+<<<<<<< HEAD
     <a href="{{ url_for('auth.logout') }}">Logout</a>
     <a href="{{ url_for('admin.settings') }}">Settings</a>
+=======
+
+        <a href="{{ url_for('admin.courses') }}">
+            Courses
+        </a>
+
+
+        <a href="{{ url_for('admin.payment_settings') }}">
+            Payment Settings
+        </a>
+
+
+        <a href="{{ url_for('auth.logout') }}">
+            Logout
+        </a>
+        <a href="{{ url_for('admin.users') }}">
+            Manage Users
+        </a>
+>>>>>>> restore-de6a5d5
 
     </nav>
 
 </header>
 
+
+
 <section class="section">
 
 <div class="container">
+
 
 <h1>
 Admin Dashboard
 </h1>
 
+
 <div class="terminal-box">
+
 
 <h2>
 Total Bookings: {{ bookings|length }}
 </h2>
 
+
+
 {% if bookings %}
 
+
 <table>
+
 
 <tr>
 
@@ -67,67 +102,71 @@ Total Bookings: {{ bookings|length }}
 
 </tr>
 
+
+
 {% for b in bookings %}
+
 
 <tr>
 
-<td>
 
+<td>
 {{ b.student.first_name }} {{ b.student.last_name }}
-
 </td>
 
-<td>
 
+<td>
 {{ b.student.email }}
-
 </td>
 
-<td>
 
+<td>
 {{ b.grade }}
-
 </td>
 
-<td>
 
+<td>
 {{ b.subject }}
-
 </td>
 
-<td>
 
+<td>
 {{ b.date }}
-
 </td>
 
-<td>
 
+<td>
 {{ b.time }}
-
 </td>
 
-<td>
 
+<td>
 {{ b.status }}
-
 </td>
 
+
+
 <td>
+
 
 {% if b.status == "Pending" %}
+
 
 <a class="btn"
 href="{{ url_for('admin.approve_booking', booking_id=b.id) }}">
 Approve
 </a>
 
+
 <a class="btn"
 href="{{ url_for('admin.decline_booking', booking_id=b.id) }}">
 Decline
 </a>
 
+
 {% endif %}
+
+
 
 <a class="btn"
 href="{{ url_for('admin.delete_booking', booking_id=b.id) }}"
@@ -135,31 +174,50 @@ onclick="return confirm('Delete this booking?');">
 Delete
 </a>
 
+
+
 </td>
+
 
 </tr>
 
+
 {% endfor %}
+
 
 </table>
 
+
+
 {% else %}
 
-<p>No bookings have been submitted yet.</p>
+
+<p>
+No bookings have been submitted yet.
+</p>
+
 
 {% endif %}
 
-</div>
+
 
 </div>
+
+
+</div>
+
 
 </section>
+
+
 
 <footer>
 
 © 2026 FD Khan Academy
 
 </footer>
+
+
 
 </body>
 

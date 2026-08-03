@@ -1,14 +1,20 @@
+```html
 <!DOCTYPE html>
 <html>
 
 <head>
 
-<title>{{ lesson.title }}</title>
+<title>Student Dashboard | FD Khan Academy</title>
 
+<<<<<<< HEAD
 <link rel="stylesheet"
 href="{{ url_for('static', filename='style.css') }}">
 
 <script src="https://www.paypal.com/sdk/js?client-id={{ setting.paypal_client_id if setting else config.PAYPAL_CLIENT_ID }}&currency=USD"></script>
+=======
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+>>>>>>> restore-de6a5d5
 </head>
 
 
@@ -24,12 +30,20 @@ FD KHAN ACADEMY
 
 <nav>
 
-<a href="{{ url_for('student.dashboard') }}">
-Dashboard
+<a href="/">
+Home
+</a>
+
+<a href="{{ url_for('booking.booking_page') }}">
+Book Lesson
 </a>
 
 <a href="{{ url_for('student.courses') }}">
-Courses
+Browse Courses
+</a>
+
+<a href="{{ url_for('auth.change_password') }}">
+Change Password
 </a>
 
 <a href="{{ url_for('auth.logout') }}">
@@ -48,89 +62,238 @@ Logout
 <div class="container">
 
 
-<div class="terminal-box">
-
-
 <h1>
-{{ lesson.title }}
+Welcome back, {{ current_user.first_name }} 👋
 </h1>
 
-
-<p>
-{{ lesson.caption }}
-</p>
-
-
-</div>
-
-
-
-{% if purchased %}
 
 
 <div class="terminal-box">
 
 
 <h2>
-🎬 Lesson Video
+📅 My Bookings
 </h2>
 
 
-<video width="900" controls>
+{% if bookings %}
 
 
-<source
-src="{{ url_for('static', filename='uploads/' + lesson.video_file) }}"
-type="video/mp4">
+<table width="100%">
 
 
-Your browser does not support video.
+<tr>
+
+<th>Date</th>
+
+<th>Time</th>
+
+<th>Subject</th>
+
+<th>Status</th>
+
+</tr>
 
 
-</video>
+
+{% for booking in bookings %}
 
 
-</div>
+<tr>
 
+<td>
+{{ booking.date }}
+</td>
+
+
+<td>
+{{ booking.time }}
+</td>
+
+
+<td>
+{{ booking.subject }}
+</td>
+
+
+<td>
+{{ booking.status }}
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</table>
 
 
 {% else %}
 
 
-
-<div class="terminal-box">
-
-
-<h2>
-🔒 Lesson Locked
-</h2>
-
-
 <p>
-Purchase this lesson to watch the video.
+No bookings yet.
 </p>
-
-
-<h3>
-${{ lesson.price }}
-</h3>
-
-
-<div id="paypal-button-container"></div>
-
-
-</div>
-
 
 
 {% endif %}
 
 
 
+<br>
+
+
+<a class="btn" href="{{ url_for('booking.booking_page') }}">
+Book Another Lesson
+</a>
+
+
+
+
+<hr>
+
+
+
+
+<h2>
+🎬 My Purchases
+</h2>
+
+
+
+{% if purchases %}
+
+
+
+<table width="100%">
+
+
+<tr>
+
+<th>Item</th>
+
+<th>Amount</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+
+
+{% for purchase in purchases %}
+
+
+
+<tr>
+
+
+<td>
+
+
+{% if purchase.video_id %}
+
+Lesson
+
+{% elif purchase.course_id %}
+
+Course
+
+{% else %}
+
+Purchase
+
+{% endif %}
+
+
+</td>
+
+
+
+<td>
+
+${{ purchase.amount }}
+
+</td>
+
+
+
+<td>
+
+{{ purchase.payment_status }}
+
+</td>
+
+
+
+<td>
+
+
+{% if purchase.video_id %}
+
+
+<a class="btn"
+href="{{ url_for('student.lesson', lesson_id=purchase.video_id) }}">
+
+Watch Lesson
+
+</a>
+
+
+{% endif %}
+
+
+
+</td>
+
+
+
+</tr>
+
+
+
+{% endfor %}
+
+
+
+</table>
+
+
+
+{% else %}
+
+
+<p>
+No purchases yet.
+</p>
+
+
+{% endif %}
+
+
+
+<br>
+
+
+<a class="btn" href="{{ url_for('student.courses') }}">
+
+Browse Courses
+
+</a>
+
+
+
+</div>
+
+
 </div>
 
 
 </section>
+
 
 
 
@@ -141,58 +304,7 @@ ${{ lesson.price }}
 </footer>
 
 
-
-<script>
-
-{% if not purchased %}
-
-
-paypal.Buttons({
-
-createOrder:function(data, actions){
-
-
-return actions.order.create({
-
-purchase_units:[{
-
-amount:{
-
-value:"{{ lesson.price }}"
-
-}
-
-}]
-
-});
-
-
-},
-
-
-
-onApprove:function(data, actions){
-
-return actions.order.capture().then(function(details){
-
-window.location.href =
-"/payment-success/{{ lesson.id }}";
-
-});
-
-}
-
-
-
-}).render('#paypal-button-container');
-
-{% endif %}
-
-
-</script>
-
-
-
 </body>
 
 </html>
+```

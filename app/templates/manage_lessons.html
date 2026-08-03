@@ -3,54 +3,76 @@
 
 <head>
 
-    <title>{{ course.title }} Lessons</title>
+<title>Manage Lessons | FD Khan Academy</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='admin.css') }}">
+<link rel="stylesheet"
+href="{{ url_for('static', filename='admin.css') }}">
 
 </head>
 
+
 <body>
 
+
 <div class="layout">
+
 
 <aside class="sidebar">
 
 <h2>FD KHAN</h2>
 
+
 <a href="{{ url_for('admin.dashboard') }}">
 Dashboard
 </a>
+
 
 <a href="{{ url_for('admin.courses') }}">
 Courses
 </a>
 
+
 <a href="{{ url_for('auth.logout') }}">
 Logout
 </a>
 
+
 </aside>
+
+
 
 <main class="main">
 
-<h1>{{ course.title }}</h1>
+
+<h1>
+Manage Lessons
+</h1>
+
+
+<h2>
+{{ course.title }}
+</h2>
+
+
 
 <a class="btn"
 href="{{ url_for('admin.add_lesson', course_id=course.id) }}">
-
-+ Upload Lesson
-
++ Add Lesson
 </a>
+
 
 <br><br>
 
+
+
 {% if lessons %}
 
+
 <table>
+
 
 <tr>
 
@@ -60,47 +82,111 @@ href="{{ url_for('admin.add_lesson', course_id=course.id) }}">
 
 <th>Price</th>
 
+<th>Video</th>
+
 <th>Actions</th>
 
 </tr>
 
+
+
 {% for lesson in lessons %}
+
 
 <tr>
 
-<td>{{ lesson.order }}</td>
-
-<td>{{ lesson.title }}</td>
-
-<td>${{ lesson.price }}</td>
 
 <td>
 
-<a class="btn">
-Edit
-</a>
-
-<a class="btn delete-btn">
-Delete
-</a>
+{{ lesson.order }}
 
 </td>
 
+
+
+<td>
+
+{{ lesson.title }}
+
+</td>
+
+
+
+<td>
+
+${{ lesson.price }}
+
+</td>
+
+
+
+<td>
+
+{{ lesson.video_file }}
+
+</td>
+
+
+
+<td>
+
+
+<a class="btn"
+href="{{ url_for('admin.edit_lesson', lesson_id=lesson.id) }}">
+Edit
+</a>
+
+
+
+<a class="delete-btn"
+href="{{ url_for('admin.delete_lesson', lesson_id=lesson.id) }}"
+onclick="return confirm('Delete this lesson?');">
+Delete
+</a>
+
+
+
+</td>
+
+
 </tr>
+
+
 
 {% endfor %}
 
+
 </table>
+
+
 
 {% else %}
 
-<p>No lessons have been uploaded yet.</p>
+
+<p>
+No lessons uploaded yet.
+</p>
+
 
 {% endif %}
 
+
+
+<br>
+
+
+<a class="btn"
+href="{{ url_for('admin.courses') }}">
+Back to Courses
+</a>
+
+
+
 </main>
 
+
 </div>
+
 
 </body>
 

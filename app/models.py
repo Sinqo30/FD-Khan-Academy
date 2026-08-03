@@ -164,9 +164,15 @@ class Purchase(db.Model):
         db.String(50),
         default="Pending"
     )
+<<<<<<< HEAD
 class SiteSetting(db.Model):
 
     __tablename__ = "site_settings"
+=======
+class BusinessSettings(db.Model):
+
+    __tablename__ = "business_settings"
+>>>>>>> restore-de6a5d5
 
     id = db.Column(
         db.Integer,
@@ -174,6 +180,19 @@ class SiteSetting(db.Model):
     )
 
     paypal_client_id = db.Column(
+<<<<<<< HEAD
         db.String(255),
         default=""
+=======
+        db.String(255)
+    )
+
+    paypal_secret = db.Column(
+        db.String(255)
+    )
+
+    currency = db.Column(
+        db.String(10),
+        default="USD"
+>>>>>>> restore-de6a5d5
     )

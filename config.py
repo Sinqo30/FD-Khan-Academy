@@ -14,7 +14,11 @@ class Config:
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    UPLOAD_FOLDER = "/tmp/uploads"
+    UPLOAD_FOLDER = os.path.join(
+    "app",
+    "static",
+    "uploads"
+)
 
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
