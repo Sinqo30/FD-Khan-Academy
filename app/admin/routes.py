@@ -6,7 +6,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 
 from ..extensions import db
-from ..models import Booking, Course, Video
+from ..models import Booking, Course, Video, SiteSetting
 
 
 admin = Blueprint(
@@ -269,4 +269,42 @@ def manage_lessons(course_id):
         "manage_lessons.html",
         course=course,
         lessons=lessons
+    )
+@admin.route("/settings", methods=["GET", "POST"])
+@login_required
+def settings():
+
+    if not current_user.is_admin:
+        return redirect(
+            url_for("student.dashboard")
+        )
+
+    setting = SiteSetting.query.first()
+
+    if setting is None:
+
+        setting = SiteSetting()
+
+        db.session.add(setting)
+
+        db.session.commit()
+
+    if request.method == "POST":
+
+        setting.paypal_client_id = request.form["paypal_client_id"]
+
+        db.session.commit()
+
+        flash(
+            "Settings updated successfully!",
+            "success"
+        )
+
+        return redirect(
+            url_for("admin.settings")
+        )
+
+    return render_template(
+        "admin_settings.html",
+        setting=setting
     )

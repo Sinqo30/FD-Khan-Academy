@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Admin Settings | FD Khan Academy</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        FD KHAN ACADEMY
+    </div>
+
+    <nav>
+
+        <a href="{{ url_for('admin.dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('admin.courses') }}">
+            Courses
+        </a>
+
+        <a href="{{ url_for('admin.settings') }}">
+            Settings
+        </a>
+
+        <a href="{{ url_for('auth.logout') }}">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <h1>Business Settings</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="terminal-box">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+
+            <div class="terminal-box">
+
+                <label><strong>PayPal Client ID</strong></label>
+
+                <br><br>
+
+                <input
+                    type="text"
+                    name="paypal_client_id"
+                    value="{{ setting.paypal_client_id }}"
+                    style="width:100%; padding:10px;">
+
+                <br><br>
+
+                <button class="btn" type="submit">
+                    Save Settings
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+</body>
+
+</html>

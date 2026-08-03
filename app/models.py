@@ -164,4 +164,16 @@ class Purchase(db.Model):
         db.String(50),
         default="Pending"
     )
-    
+class SiteSetting(db.Model):
+
+    __tablename__ = "site_settings"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    paypal_client_id = db.Column(
+        db.String(255),
+        default=""
+    )
