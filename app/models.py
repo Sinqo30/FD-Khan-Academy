@@ -164,4 +164,24 @@ class Purchase(db.Model):
         db.String(50),
         default="Pending"
     )
-    
+class BusinessSettings(db.Model):
+
+    __tablename__ = "business_settings"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    paypal_client_id = db.Column(
+        db.String(255)
+    )
+
+    paypal_secret = db.Column(
+        db.String(255)
+    )
+
+    currency = db.Column(
+        db.String(10),
+        default="USD"
+    )

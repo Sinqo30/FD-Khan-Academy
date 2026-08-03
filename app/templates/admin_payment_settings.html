@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Payment Settings</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<section class="section">
+
+<div class="container">
+
+<div class="terminal-box">
+
+<h1>Payment Settings</h1>
+
+<form method="POST">
+
+<label>PayPal Client ID</label>
+
+<input
+type="text"
+name="paypal_client_id"
+value="{{ settings.paypal_client_id or '' }}"
+>
+
+
+<label>PayPal Secret</label>
+
+<input
+type="password"
+name="paypal_secret"
+value="{{ settings.paypal_secret or '' }}"
+>
+
+
+<label>Currency</label>
+
+<input
+type="text"
+name="currency"
+value="{{ settings.currency or 'USD' }}"
+>
+
+
+<button class="btn" type="submit">
+Save Settings
+</button>
+
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+</body>
+
+</html>
