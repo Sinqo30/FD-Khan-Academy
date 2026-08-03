@@ -1,0 +1,218 @@
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Manage Users | FD Khan Academy</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+FD KHAN ACADEMY
+</div>
+
+
+<nav>
+
+<a href="{{ url_for('admin.dashboard') }}">
+Dashboard
+</a>
+
+<a href="{{ url_for('admin.courses') }}">
+Courses
+</a>
+
+<a href="{{ url_for('admin.users') }}">
+Manage Users
+</a>
+
+<a href="{{ url_for('admin.payment_settings') }}">
+Payment Settings
+</a>
+
+<a href="{{ url_for('auth.logout') }}">
+Logout
+</a>
+
+</nav>
+
+</header>
+
+
+
+<section class="section">
+
+
+<div class="container">
+
+
+<h1>
+Manage Users
+</h1>
+
+
+
+<div class="terminal-box">
+
+
+
+{% if users %}
+
+
+
+<table width="100%">
+
+
+<tr>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Role</th>
+
+<th>Actions</th>
+
+</tr>
+
+
+
+{% for user in users %}
+
+
+
+<tr>
+
+
+<td>
+
+{{ user.first_name }}
+{{ user.last_name }}
+
+</td>
+
+
+
+<td>
+
+{{ user.email }}
+
+</td>
+
+
+
+<td>
+
+
+{% if user.is_admin %}
+
+✅ Admin
+
+{% else %}
+
+Student
+
+{% endif %}
+
+
+</td>
+
+
+
+<td>
+
+
+
+{% if not user.is_admin %}
+
+
+<a class="btn"
+href="{{ url_for('admin.make_admin', user_id=user.id) }}"
+onclick="return confirm('Make this user an admin?');">
+
+Make Admin
+
+</a>
+
+
+
+{% else %}
+
+
+
+<a class="delete-btn"
+href="{{ url_for('admin.remove_admin', user_id=user.id) }}"
+onclick="return confirm('Remove admin access from this user?');">
+
+Remove Admin
+
+</a>
+
+
+
+{% endif %}
+
+
+
+</td>
+
+
+
+</tr>
+
+
+
+{% endfor %}
+
+
+
+</table>
+
+
+
+{% else %}
+
+
+<p>
+No users found.
+</p>
+
+
+{% endif %}
+
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+<footer>
+
+© 2026 FD Khan Academy
+
+</footer>
+
+
+
+</body>
+
+</html>
+```

@@ -541,3 +541,81 @@ def payment_settings():
         "admin_payment_settings.html",
         settings=settings
     )
+from ..models import User
+@admin.route("/users")
+@login_required
+def users():
+
+    if not current_user.is_admin:
+        return redirect(
+            url_for("student.dashboard")
+        )
+
+    users = User.query.all()
+
+    return render_template(
+        "admin_users.html",
+        users=users
+    )
+
+
+@admin.route("/users/make-admin/<int:user_id>")
+@login_required
+def make_admin(user_id):
+
+    if not current_user.is_admin:
+        return redirect(
+            url_for("student.dashboard")
+        )
+
+    user = User.query.get_or_404(user_id)
+
+    user.is_admin = True
+
+    db.session.commit()
+
+    flash(
+        "User is now an admin!",
+        "success"
+    )
+
+    return redirect(
+        url_for("admin.users")
+    )
+@admin.route("/users/remove-admin/<int:user_id>")
+@login_required
+def remove_admin(user_id):
+
+    if not current_user.is_admin:
+        return redirect(
+            url_for("student.dashboard")
+        )
+
+    user = User.query.get_or_404(user_id)
+
+    # Prevent removing yourself
+    if user.id == current_user.id:
+        flash(
+            "You cannot remove your own admin access.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("admin.users")
+        )
+
+
+    user.is_admin = False
+
+    db.session.commit()
+
+
+    flash(
+        "Admin access removed.",
+        "success"
+    )
+
+
+    return redirect(
+        url_for("admin.users")
+    )
