@@ -9,23 +9,25 @@ class Config:
     )
 
     SQLALCHEMY_DATABASE_URI = os.environ.get(
-    "DATABASE_URL",
-    "sqlite:////tmp/fdkhan.db"
-)
+        "DATABASE_URL",
+        "sqlite:///fdkhan.db"
+    )
+
+    # Fix older postgres:// URLs
+    if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
+        SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace(
+            "postgres://",
+            "postgresql://",
+            1
+        )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # Vercel writable temporary upload location
-    UPLOAD_FOLDER = os.path.join(
-        "/tmp",
-        "uploads"
-    )
-
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+    # Vercel only allows writing to /tmp
+    UPLOAD_FOLDER = "/tmp/uploads"
 
     MAX_CONTENT_LENGTH = 500 * 1024 * 1024
 
-    # PayPal
     PAYPAL_CLIENT_ID = os.environ.get(
         "PAYPAL_CLIENT_ID"
     )
