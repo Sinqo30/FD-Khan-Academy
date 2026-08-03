@@ -1,5 +1,6 @@
 import os
 
+
 class Config:
 
     SECRET_KEY = os.environ.get(
@@ -14,11 +15,11 @@ class Config:
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # Vercel writable temporary upload location
     UPLOAD_FOLDER = os.path.join(
-    "app",
-    "static",
-    "uploads"
-)
+        "/tmp",
+        "uploads"
+    )
 
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
