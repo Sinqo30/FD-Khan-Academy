@@ -1,20 +1,16 @@
-```html
 <!DOCTYPE html>
 <html>
 
 <head>
 
-<title>Student Dashboard | FD Khan Academy</title>
+<title>Student Lesson | FD Khan Academy</title>
 
-<<<<<<< HEAD
 <link rel="stylesheet"
 href="{{ url_for('static', filename='style.css') }}">
 
-<script src="https://www.paypal.com/sdk/js?client-id={{ setting.paypal_client_id if setting else config.PAYPAL_CLIENT_ID }}&currency=USD"></script>
-=======
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
->>>>>>> restore-de6a5d5
+<script src="https://www.paypal.com/sdk/js?client-id={{ setting.paypal_client_id if setting else config.PAYPAL_CLIENT_ID }}&currency=USD"></script>
+
 </head>
 
 
@@ -34,17 +30,21 @@ FD KHAN ACADEMY
 Home
 </a>
 
+
 <a href="{{ url_for('booking.booking_page') }}">
 Book Lesson
 </a>
+
 
 <a href="{{ url_for('student.courses') }}">
 Browse Courses
 </a>
 
+
 <a href="{{ url_for('auth.change_password') }}">
 Change Password
 </a>
+
 
 <a href="{{ url_for('auth.logout') }}">
 Logout
@@ -72,217 +72,38 @@ Welcome back, {{ current_user.first_name }} 👋
 
 
 <h2>
-📅 My Bookings
+🎬 Lesson
 </h2>
 
 
-{% if bookings %}
+{% if video %}
 
-
-<table width="100%">
-
-
-<tr>
-
-<th>Date</th>
-
-<th>Time</th>
-
-<th>Subject</th>
-
-<th>Status</th>
-
-</tr>
-
-
-
-{% for booking in bookings %}
-
-
-<tr>
-
-<td>
-{{ booking.date }}
-</td>
-
-
-<td>
-{{ booking.time }}
-</td>
-
-
-<td>
-{{ booking.subject }}
-</td>
-
-
-<td>
-{{ booking.status }}
-</td>
-
-
-</tr>
-
-
-{% endfor %}
-
-
-</table>
-
-
-{% else %}
+<h3>
+{{ video.title }}
+</h3>
 
 
 <p>
-No bookings yet.
+{{ video.caption }}
 </p>
 
 
-{% endif %}
+<video width="100%" controls>
 
+<source src="{{ url_for('static', filename='uploads/' + video.video_file) }}">
 
+Your browser does not support video playback.
 
-<br>
-
-
-<a class="btn" href="{{ url_for('booking.booking_page') }}">
-Book Another Lesson
-</a>
-
-
-
-
-<hr>
-
-
-
-
-<h2>
-🎬 My Purchases
-</h2>
-
-
-
-{% if purchases %}
-
-
-
-<table width="100%">
-
-
-<tr>
-
-<th>Item</th>
-
-<th>Amount</th>
-
-<th>Status</th>
-
-<th>Action</th>
-
-</tr>
-
-
-
-{% for purchase in purchases %}
-
-
-
-<tr>
-
-
-<td>
-
-
-{% if purchase.video_id %}
-
-Lesson
-
-{% elif purchase.course_id %}
-
-Course
-
-{% else %}
-
-Purchase
-
-{% endif %}
-
-
-</td>
-
-
-
-<td>
-
-${{ purchase.amount }}
-
-</td>
-
-
-
-<td>
-
-{{ purchase.payment_status }}
-
-</td>
-
-
-
-<td>
-
-
-{% if purchase.video_id %}
-
-
-<a class="btn"
-href="{{ url_for('student.lesson', lesson_id=purchase.video_id) }}">
-
-Watch Lesson
-
-</a>
-
-
-{% endif %}
-
-
-
-</td>
-
-
-
-</tr>
-
-
-
-{% endfor %}
-
-
-
-</table>
-
+</video>
 
 
 {% else %}
-
 
 <p>
-No purchases yet.
+Lesson not found.
 </p>
 
-
 {% endif %}
-
-
-
-<br>
-
-
-<a class="btn" href="{{ url_for('student.courses') }}">
-
-Browse Courses
-
-</a>
 
 
 
@@ -307,4 +128,3 @@ Browse Courses
 </body>
 
 </html>
-```
