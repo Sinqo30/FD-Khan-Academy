@@ -1,9 +1,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from flask_login import UserMixin
 
 from .extensions import db
-
 from .extensions import login_manager
 
 
@@ -57,10 +55,10 @@ class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     student_id = db.Column(
-    db.Integer,
-    db.ForeignKey("users.id"),
-    nullable=False
-)
+        db.Integer,
+        db.ForeignKey("users.id"),
+        nullable=False
+    )
 
     grade = db.Column(db.String(20))
 
@@ -134,6 +132,8 @@ class Video(db.Model):
     price = db.Column(db.Float)
 
     order = db.Column(db.Integer)
+
+
 class Purchase(db.Model):
 
     __tablename__ = "purchases"
@@ -164,15 +164,11 @@ class Purchase(db.Model):
         db.String(50),
         default="Pending"
     )
-<<<<<<< HEAD
-class SiteSetting(db.Model):
 
-    __tablename__ = "site_settings"
-=======
+
 class BusinessSettings(db.Model):
 
     __tablename__ = "business_settings"
->>>>>>> restore-de6a5d5
 
     id = db.Column(
         db.Integer,
@@ -180,10 +176,6 @@ class BusinessSettings(db.Model):
     )
 
     paypal_client_id = db.Column(
-<<<<<<< HEAD
-        db.String(255),
-        default=""
-=======
         db.String(255)
     )
 
@@ -194,5 +186,4 @@ class BusinessSettings(db.Model):
     currency = db.Column(
         db.String(10),
         default="USD"
->>>>>>> restore-de6a5d5
     )
